@@ -1,0 +1,25 @@
+Opis projektu:
+
+Moim pomysłem na projekt jest program do zarządzania projektami, który wspiera organizację i koordynację działań na każdym etapie realizacji projektu. Realizacja projektów w przedsiębiorstwie wymaga szczegółowego planowania i ścisłej współpracy w zespole. Program, który zamierzam stworzyć, pomoże w zarządzaniu zadaniami, pilnowaniu budżetu oraz wszelkich terminów, a także w monitorowaniu postępów prac.
+
+Głównymi aspektami programu będą:
+
+-> Inicjalizacja projektu
+Określenie budżetu, terminu wykonania, ale także przydzielenie odpowiedniego kierownika projektu, zbudowanie zespołu oraz utworzenie menedżera, który będzie koordynował pracę nad zadaniami.
+
+-> Zarządzanie zespołem:
+Możliwość modyfikacji zespołu, pisania raportów, do których wgląd ma kierownik projektu, a także udostępnienie członkom zespołu wspólnego pliku do dzielenia się pomysłami i ideami.
+
+-> Zarządzanie zadaniami:
+Odpowiednie przypisywanie zadań pracownikom, na podstawie przydzielonych im uprawnień (w tym możliwość przepisywania zadań innym pracownikom oraz praca w grupach), podział zadań według ich statusu (nieukończone/ukończone), edytowanie terminów zadań lub ich szacowanego kosztu.
+
+-> Budowanie harmonogramu:
+Określenie dnia tygodnia, w którym będą sporządzane raporty oraz zapisywanie nadchodzących wydarzeń i spotkań.
+
+-> Monitorowanie postępów oraz śledzenie budżetu:
+Generowanie raportów o postępach prac oraz śledzenie wydatków w czasie realizacji projektu.
+
+
+
+
+Na przesłanym diagramie klas każda metoda, która wymagać będzie argumentów, ma dopisek 'args' - uznałam, że diagram byłby bardzo nieczytelny, gdybym wymieniła dodatkowo wszystkie argumenty wraz z ich typami. Pełny schemat projektu zostanie zawarty w dokumentacji.
