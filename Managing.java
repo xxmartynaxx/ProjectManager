@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class Managing {
-    
+
     public static void manageProject(Scanner scanner, Project project) {
-        
+
         // flaga powrotu
         boolean goBack = false;
 
@@ -27,7 +27,13 @@ public class Managing {
                 case 4 -> Views.teamMemberView(scanner, project);
                 case 5 -> Views.projectManagerView(scanner, project);
                 case 6 -> Views.scheduleView(scanner, project);
-                case 7 -> goBack = true;
+                case 7 -> {
+                    CompanyDB.saveMembersToFile(project.team.members);
+                    CompanyDB.saveTasksToFile(project.taskManager.tasks);
+                    CompanyDB.saveTasksToFile(project.taskManager.completedTasks);
+                    CompanyDB.saveScheduleToFile(project.schedule.meetings);
+                    goBack = true;
+                }
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 7.\n");
             }
         }

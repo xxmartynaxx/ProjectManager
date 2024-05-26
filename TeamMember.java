@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 class TeamMember extends Worker {
@@ -12,8 +11,6 @@ class TeamMember extends Worker {
     // oraz własną listę zadań do wykonania
     private int projectIndex;
     private int permissionStatus;
-    // public Team memberOf;
-    private ArrayList<Task> memberTasks = new ArrayList<Task>();
 
     // konstruktor klasy
     public TeamMember(int index, int projectIndex, String firstName, String lastName, String email,
@@ -50,27 +47,37 @@ class TeamMember extends Worker {
         String fileName = project.team.nickname + "_commonFile.txt";
         File file = new File(fileName);
 
-        // append - jeśli true to dopisujemy, nie nadpisujemy
-        if (file.exists()) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-                writer.write(idea + "\n");
-                writer.write(
-                        "-- ADDED BY: " + this.firstName + " " + this.lastName + " -- " + LocalDate.now() + " --\n\n");
-            } catch (IOException e) {
-                System.out.println("An error occurred while writing to the common file.");
-            }
-
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(idea + "\n");
+            writer.write("-- ADDED BY: " + this.firstName + " " + this.lastName + " -- " + LocalDate.now() + " --\n\n");
+        } catch (IOException e) {
+            System.out.println("An error occurred while writing to the common file.");
         }
+    }
 
-        else {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                writer.write(idea + "\n");
-                writer.write(
-                        "-- ADDED BY: " + this.firstName + " " + this.lastName + " -- " + LocalDate.now() + " --\n\n");
-            } catch (IOException e) {
-                System.out.println("An error occurred while creating the common file.");
-            }
-        }
+    public String parseToString() {
+
+        String wIndex = Integer.toString(this.getIndex());
+        String pIndex = Integer.toString(projectIndex);
+        String pS = Integer.toString(permissionStatus);
+
+        String line = pIndex + ";" + wIndex + ";" + pS;
+        return line;
+    }
+
+    public static TeamMember loadFromFile(String line) {
+        // projectIndex, index, permissionStatus
+        String[] informations = line.split(";");
+
+        int pIndex = Integer.parseInt(informations[0]);
+        int wIndex = Integer.parseInt(informations[1]);
+        int pS = Integer.parseInt(informations[2]);
+
+        Worker w = Main.getWorkerByIndex(wIndex);
+
+        TeamMember teamMember = new TeamMember(wIndex, pIndex, w.firstName, w.lastName, w.email, pS);
+
+        return teamMember;
     }
 
 }

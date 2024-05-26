@@ -3,13 +3,7 @@ import java.util.Scanner;
 public class Views {
 
     public static void taskManagerView(Scanner scanner, Project project) {
-        // może i tu i przy exit się zająć taskami? mamy przekazany project więc
-        // będziemy ich szukać w pliku po indexie projektu i będziemy je dodawać do
-        // project.taskmanager.tasks (i completed)
-        // tutaj będziemy je edytować, zmieniać ich parametry i to się będzie działo na
-        // tej liście tasków wewnątrz
-        // przy goBack będziemy edytować plik, usuwając wszystkie taski z tym indexem
-        // projektu i wpisując nowe
+
         boolean goBack = false;
         while (!goBack) {
             System.out.println("\nSelect one of the actions below:");
@@ -31,8 +25,7 @@ public class Views {
                 case 5 -> project.taskManager.updateTaskEstimatedCost(scanner, project);
                 case 6 -> project.taskManager.addTask(scanner, project);
                 case 7 -> project.taskManager.generateReport();
-                case 8 -> goBack = true; // pytanie gdzie (kiedy) zapisać wszelkie zmiany - może aktualizować pliki (na
-                                         // podstawie arraylist (tam gdzie się da)) jak robimy goBack
+                case 8 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 8.\n");
             }
         }
@@ -53,7 +46,7 @@ public class Views {
                 case 1 -> project.team.displayInfo();
                 case 2 -> project.team.addMember(scanner, project);
                 case 3 -> project.team.removeMember(scanner);
-                case 4 -> goBack = true; // pytanie gdzie (kiedy) zapisać wszelkie zmiany
+                case 4 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 4.\n");
             }
         }
@@ -76,7 +69,7 @@ public class Views {
                 case 2 -> project.updateBudget(scanner);
                 case 3 -> project.checkBudget();
                 case 4 -> project.timeLeft();
-                case 5 -> goBack = true; // pytanie gdzie (kiedy) zapisać wszelkie zmiany
+                case 5 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 5.\n");
             }
         }

@@ -1,9 +1,3 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +18,8 @@ public class Project {
     public double budget;
 
     // konstruktor klasy Project
-    public Project(String name, String description, LocalDate deadline, ProjectManager projectManager, String sponsor, double budget) {
+    public Project(String name, String description, LocalDate deadline, ProjectManager projectManager, String sponsor,
+            double budget) {
         this.name = name;
         this.description = description;
         this.deadline = deadline;
@@ -33,7 +28,7 @@ public class Project {
 
         this.projectManager = projectManager;
         projectManager.projects.add(this);
-        
+
         this.index = Main.projectsCounter;
 
         this.taskManager = new TaskManager();
@@ -42,7 +37,7 @@ public class Project {
         this.team = new Team();
         team.nickname = String.format("ProjectNo__%d__", index);
 
-        this.schedule  = new Schedule();
+        this.schedule = new Schedule();
     }
 
     public int getIndex() {
@@ -51,6 +46,7 @@ public class Project {
 
     // załadowanie projektu z pliku
     public static Project loadFromFile(String line) {
+        // index, name, descr, deadlin,e PMIndex, sponsor, budget
         String[] informations = line.split(";");
 
         int index = Integer.parseInt(informations[0]);
@@ -120,7 +116,7 @@ public class Project {
 
     // wyświetlenie czasu, jaki pozostał na wykonanie projektu
     public void timeLeft() {
-        
+
         Period period = (LocalDate.now()).until(this.deadline);
         int years = period.getYears();
         int months = period.getMonths();
@@ -130,5 +126,16 @@ public class Project {
         System.out.println("Years: " + years + ", months: " + months + ", days: " + days);
 
     }
-    
+
+    public String parseToString() {
+
+        String pIndex = Integer.toString(index);
+        String PMIndex = Integer.toString(projectManager.getIndex());
+        String d = deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String b = Double.toString(budget);
+
+        String line = pIndex + ";" + name + ";" + description + ";" + d + ";"
+                + PMIndex + ";" + sponsor + ";" + b;
+        return line;
+    }
 }

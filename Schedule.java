@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Schedule {
-    
+
     // harmonogram zawiera listę nadchodzących spotkań
-    private ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+    public ArrayList<Meeting> meetings = new ArrayList<Meeting>();
 
     // wyświetlenie listy wszystkich spotkań
     public void showMeetings() {
@@ -37,7 +37,6 @@ public class Schedule {
         Meeting newMeeting = new Meeting(project.getIndex(), title, place, time, duration);
         meetings.add(newMeeting);
 
-       // w CompanyDB będzie trzeba załadować te spotkania do odpowiednich projektów
     }
-    
+
 }

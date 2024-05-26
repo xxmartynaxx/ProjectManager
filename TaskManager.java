@@ -1,6 +1,5 @@
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -35,8 +34,6 @@ public class TaskManager {
                 task.isCompleted = true;
                 completedTasks.add(task);
                 tasks.remove(task);
-                // potem przy już ostatecznym rozliczeniu i wpisywaniu do pliku to wszystkie
-                // taski z completedTasks niech będą zapisane z memberIndex = 0
                 project.budget -= task.estimatedCost;
                 break;
             }
@@ -126,33 +123,32 @@ public class TaskManager {
         String description = scanner.nextLine();
 
         System.out.println("-- Enter the task's required permission status: ");
-        String requiredPS = Integer.toString(scanner.nextInt());
+        int requiredPS = scanner.nextInt();
         scanner.nextLine();
 
         System.out.println("-- Enter the task's deadline (YYYY-MM-DD): ");
-        String deadline = scanner.nextLine();
+        String date = scanner.nextLine();
+        LocalDate deadline = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         System.out.println("-- Enter the task's estimated cost: ");
-        String estimatedCost = Double.toString(scanner.nextDouble());
+        double estimatedCost = scanner.nextDouble();
         scanner.nextLine();
 
         System.out.println("-- Enter the index of the Worker who should work on this task: ");
-        String indexTM = Integer.toString(scanner.nextInt());
+        int TMIndex = scanner.nextInt();
         scanner.nextLine();
 
-        String info = Integer.toString(tasksCounter) + ";" + Integer.toString(project.getIndex()) + ";" + indexTM + ";"
-                + name + ";" + description + ";" + requiredPS + ";" +
-                deadline + ";" + estimatedCost;
-
-        try (FileWriter writer = new FileWriter("Tasks.txt", true)) {
-            writer.write(info + "\n");
-            System.out.println("\nThe task has been added successfully.");
-            tasksCounter++;
-
-        } catch (IOException e) {
-            System.out.println("\nAn error occurred while saving the task to the file: ");
+        if (project.team.getMemberByIndex(TMIndex) == null) {
+            System.out.println("This Worker is not a part of this team.");
+            return;
         }
 
+        Task newTask = new Task(TMIndex, name, description, requiredPS, deadline, estimatedCost);
+        newTask.setIndex(tasksCounter);
+        newTask.setProjectIndex(project.getIndex());
+
+        tasks.add(newTask);
+        tasksCounter++;
     }
 
     // wyświetlenie postępu projektu

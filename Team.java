@@ -5,7 +5,7 @@ class Team {
 
     // zespół ma swoją unikalną nazwę, listę należących do niego członków
     public String nickname;
-    private ArrayList<TeamMember> members = new ArrayList<TeamMember>();
+    public ArrayList<TeamMember> members = new ArrayList<TeamMember>();
 
     // wypisanie informacji o zespole
     public void displayInfo() {
@@ -22,14 +22,14 @@ class Team {
         System.out.println("\nTo add a Team Member, complete the form below. ");
 
         System.out.println("\nEnter the index of the Worker, you want to add to the team.");
-        int indexWorker = scanner.nextInt();
+        int workerIndex = scanner.nextInt();
 
-        if (Main.getWorkerByIndex(indexWorker) != null && getMemberByIndex(indexWorker) == null) {
+        if (Main.getWorkerByIndex(workerIndex) != null && getMemberByIndex(workerIndex) == null) {
 
             System.out.println("\nEnter the permission status for this Worker.");
             int permissionStatus = scanner.nextInt();
 
-            TeamMember newMember = new TeamMember(indexWorker, project.getIndex(), Main.getWorkerByIndex(indexWorker).firstName, Main.getWorkerByIndex(indexWorker).lastName, Main.getWorkerByIndex(indexWorker).email, permissionStatus);
+            TeamMember newMember = new TeamMember(workerIndex, project.getIndex(), Main.getWorkerByIndex(workerIndex).firstName, Main.getWorkerByIndex(workerIndex).lastName, Main.getWorkerByIndex(workerIndex).email, permissionStatus);
 
             members.add(newMember);
 

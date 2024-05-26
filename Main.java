@@ -55,11 +55,7 @@ public class Main {
                 case 2 -> removeProject(scanner);
                 case 3 -> manageProject(scanner);
                 case 4 -> {
-                    // tutaj chcemy funkcję z companyDB taką, że 
-                    // nadpisujemy DB_Projects.txt -
-                    // tuptamy kolejno po projektach z companyProjects i zapisujemy je w pliku DB_Projects.txt
-                    // zatem dla każdego projektu będzie trzeba zmienić jego parametry na String i zapisać
-                    // te parametry w pliku rozdzielone ";"
+                    CompanyDB.saveProjectsToFile();
                     exit = true;
                     System.out.println("\nExiting program.");
                 }
@@ -123,6 +119,11 @@ public class Main {
         int indexPM = scanner.nextInt();
         scanner.nextLine();
 
+        if (getPMByIndex(indexPM) == null) {
+            System.out.println("\nInvalid index. There is no Project Manager with this index.");
+            return;
+        }
+
         System.out.println("-- Enter the project's sponsor: ");
         String sponsor = scanner.nextLine();
 
@@ -163,7 +164,13 @@ public class Main {
 
     // zarządzanie istniejącym projektem
     public static void manageProject(Scanner scanner) {
-        System.out.println("\n Select the project to manage.");
+
+        if (companyProjects.isEmpty()) {
+            System.out.println("\nNo projects on the list to manage.");
+            return;
+        }
+
+        System.out.println("\nSelect the project to manage.");
         for (Project p : companyProjects) {
             System.out.println("--> " + p.getIndex() + " " + p.name);
         }
@@ -172,8 +179,7 @@ public class Main {
         Project projectToManage = getProjectByIndex(userChoice);
         if (projectToManage == null) {
             System.out.println("\nInvalid index.");
-        }
-        else {
+        } else {
             CompanyDB.loadMembers(projectToManage);
             CompanyDB.loadSchedule(projectToManage);
             CompanyDB.loadTasks(projectToManage);
