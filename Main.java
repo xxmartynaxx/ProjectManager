@@ -1,127 +1,183 @@
-
-// Demonstracja działania programu na przykładzie ZMIANY (ODŚWIEŻENIA) WIZERUNKU FIRMY (ang. REBRANDING)
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
-        public static void main(String[] args) {
+    // bazowe informacje dotyczące firmy
+    public static int projectsCounter = 1;
+    public static ArrayList<Worker> companyWorkers = new ArrayList<Worker>();
+    public static ArrayList<ProjectManager> companyProjectManagers = new ArrayList<ProjectManager>();
+    public static ArrayList<Project> companyProjects = new ArrayList<Project>();
 
-                System.out.println("\n");
+    public static void main(String[] args) {
 
-                // pierwszym krokiem jest wprowadzenie pracowników firmy,
-                // w której pojawił się projekt do wykonania
-                Worker workerJane = new Worker("Jane", "Sunny", "jane.sunny@company.com");
-                Worker workerAlex = new Worker("Alex", "Stark", "alex.stark@company.com");
-                Worker workerMark = new Worker("Mark", "Smith", "mark.smith@company.com");
+        CompanyDB.loadData();
 
-                ProjectManager managerJudy = new ProjectManager("Judy", "Torrens", "judy.torrens@company.com");
+        System.out.println("\n--- Projects Managing Program ---\n");
 
-                // następnie definiujemy projekt
-                Project rebrandingProject = new Project("Company Rebranding",
-                                "Refreshing the company's image to align with modern trends and values.",
-                                LocalDate.of(2025, 1, 15),
-                                "Company's Managers", 120000);
-
-                // ustanawiamy kierownika projektu
-                // sprawdzamy, czy managerJudy może kierować nowopowstałym projektem
-                if (managerJudy.addProject(rebrandingProject)) {
-                        rebrandingProject.setProjectManager(managerJudy);
-                }
-
-                else {
-                        System.out.println("This Project Manager is already managing 3 projects.");
-                        System.out.println("Choose another Project Manager to manage this project.");
-                }
-
-                // tworzymy zespół, który będzie pracował nad projektem
-                (rebrandingProject.team).setNickname("Band To Rebrand");
-
-                (rebrandingProject.team).addMember(workerJane, 2); // indeks 1
-                (rebrandingProject.team).addMember(workerAlex, 1); // indeks 2
-                (rebrandingProject.team).addMember(workerMark, 3); // indeks 3
-
-                // dopisujemy zadania, jakich należy się podjąć
-                Task research = new Task("Market Research", 0, LocalDate.of(2024, 7, 20), 5000);
-                Task logo = new Task("New Logo Design", 2, LocalDate.of(2024, 8, 10), 15000);
-                Task website = new Task("Website Redesign", 2, LocalDate.of(2024, 9, 10), 25000);
-                Task materials = new Task("Marketing Materials", 2, LocalDate.of(2024, 10, 17), 55000);
-                Task campaign = new Task("Launch Campaign", 3, LocalDate.of(2024, 12, 15), 15000);
-
-                // wprowadzamy zadania do taskManagera projektu
-                (rebrandingProject.taskManager).addTask(research);
-                (rebrandingProject.taskManager).addTask(logo);
-                (rebrandingProject.taskManager).addTask(website);
-                (rebrandingProject.taskManager).addTask(materials);
-                (rebrandingProject.taskManager).addTask(campaign);
-
-                // dodajemy opisy zadań, aby członkowie zespołu dokładnie wiedzieli, co robić
-                research.setDescription(
-                                "Conducting market research to understand how the brand is perceived by customers, what their preferences are, and analyzing the competitive landscape. This task is crucial to ensure the rebranding aligns with market needs and expectations.");
-
-                logo.setDescription(
-                                "Creating a new logo that reflects the updated brand identity, including the design of a new color palette and typography. This task aims to visually represent the new values and vision of the company.");
-
-                website.setDescription(
-                                "Redesigning the company's website to align with the new brand identity. This involves updating the visual design, improving user experience, and ensuring the website effectively communicates the rebranded message.");
-
-                materials.setDescription(
-                                "Developing new marketing materials, such as business cards, brochures, banners, and product packaging, to reflect the new brand identity. This task ensures all customer touchpoints are consistent with the rebranded image.");
-
-                campaign.setDescription(
-                                "Planning and executing a launch campaign to announce the rebranding to customers, partners, and the public. This includes preparing communication strategies, promotional activities, and media outreach to ensure a successful rebranding launch.");
-
-                // przypisujemy zadania konkretnym członkom zespołu
-                TeamMember memberJane = (rebrandingProject.team).getMemberByIndex(1);
-                TeamMember memberAlex = (rebrandingProject.team).getMemberByIndex(2);
-                TeamMember memberMark = (rebrandingProject.team).getMemberByIndex(3);
-
-                (rebrandingProject.taskManager).assignTask(research, memberAlex);
-                (rebrandingProject.taskManager).assignTask(logo, memberJane);
-                (rebrandingProject.taskManager).assignTask(website, memberJane);
-                (rebrandingProject.taskManager).assignTask(materials, memberMark);
-                (rebrandingProject.taskManager).assignTask(campaign, memberMark);
-
-                // wypisujemy zadania danego członka zespołu
-                memberMark.showTasks();
-
-                // projekt ma już wszystko, co potrzebne, by rozpocząć nad nim pracę
-                rebrandingProject.displayInfo();
-
-                // sprawdzamy, jak wygląda sytuacja z budżetem
-                rebrandingProject.checkBudget();
-
-                // ustalamy dzień przesyłania raportów
-                (rebrandingProject.team).schedule.setReportDay(DayOfWeek.TUESDAY);
-
-                // członek zespołu może podzielić się swoimi przemyśleniami
-                memberAlex.addToCommonFile("Some piece of information to share with the others.");
-
-                // może też pisać raporty, które będą sprawdzane przez kierownika projektu
-                memberJane.submitReport("Some piece of information about my recent tasks.");
-                managerJudy.showReport(memberJane);
-
-                // aktualizujemy harmonogram zespołu - dodajemy spotkanie
-                Meeting lunchTogether = new Meeting("Lunch for Team Members", "XYZ",
-                                LocalDateTime.of(2024, 6, 10, 12, 30, 0), 2);
-                (rebrandingProject.team).schedule.addMeeting(lunchTogether);
-
-                // wyświetlamy harmonogram zespołu
-                (rebrandingProject.team).schedule.showMeetings();
-
-                // odznaczamy ukończone zadania
-                (rebrandingProject.taskManager).setAsCompleted(logo, memberJane);
-                (rebrandingProject.taskManager).setAsCompleted(research, memberAlex);
-
-                // wyświetlamy postępu projektu
-                (rebrandingProject.taskManager).generateReport();
-
-                // ponownie sprawdzamy, jak wygląda sytuacja z budżetem
-                rebrandingProject.checkBudget();
-
-                // wyświetlamy czas, jaki pozostał do ukończenia projektu
-                rebrandingProject.timeLeft();
+        System.out.println("Company's Workers:");
+        for (Worker w : companyWorkers) {
+            w.displayInfo();
         }
 
+        System.out.println("\nCompany's Project Managers:");
+        for (ProjectManager pm : companyProjectManagers) {
+            pm.displayInfo();
+        }
+
+        System.out.println("\nCompany's Projects:");
+        if (companyProjects.size() == 0) {
+            System.out.println("No projects have been added to the list yet.");
+        } else {
+            for (Project p : companyProjects) {
+                System.out.println(p.getIndex() + "  " + p.name);
+            }
+        }
+
+        // flaga wyjścia
+        boolean exit = false;
+        Scanner scanner = new Scanner(System.in);
+
+        while (!exit) {
+            System.out.println("\nSelect one of the actions below:");
+            System.out.println("1. Add a new project to the system");
+            System.out.println("2. Remove the project from the system");
+            System.out.println("3. Manage one of the projects from the system");
+            System.out.println("4. Exit");
+
+            int userChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (userChoice) {
+                case 1 -> addProject(scanner);
+                case 2 -> removeProject(scanner);
+                case 3 -> manageProject(scanner);
+                case 4 -> {
+                    // tutaj chcemy funkcję z companyDB taką, że 
+                    // nadpisujemy DB_Projects.txt -
+                    // tuptamy kolejno po projektach z companyProjects i zapisujemy je w pliku DB_Projects.txt
+                    // zatem dla każdego projektu będzie trzeba zmienić jego parametry na String i zapisać
+                    // te parametry w pliku rozdzielone ";"
+                    exit = true;
+                    System.out.println("\nExiting program.");
+                }
+                default -> System.out.println("\nInvalid choice. Please choose between 1 and 4.\n");
+            }
+        }
+
+        scanner.close();
+
+    }
+
+    // zwrócenie konkretnego pracownika (po jego unikalnym indeksie)
+    public static Worker getWorkerByIndex(int index) {
+
+        for (Worker worker : companyWorkers) {
+            if (worker.getIndex() == index) {
+                return worker;
+            }
+        }
+        return null;
+    }
+
+    // zwrócenie konkretnego kierownika projektu (po jego unikalnym indeksie)
+    public static ProjectManager getPMByIndex(int index) {
+
+        for (ProjectManager projectManager : companyProjectManagers) {
+            if (projectManager.getIndex() == index) {
+                return projectManager;
+            }
+        }
+        return null;
+    }
+
+    // zwrócenie konkretnego projektu (po jego unikalnym indeksie)
+    public static Project getProjectByIndex(int index) {
+
+        for (Project project : companyProjects) {
+            if (project.getIndex() == index) {
+                return project;
+            }
+        }
+        return null;
+    }
+
+    // dodanie nowego projektu do systemu
+    public static void addProject(Scanner scanner) {
+
+        System.out.println("\nTo add a project, complete the form below.");
+
+        System.out.println("-- Enter the name of the project: ");
+        String name = scanner.nextLine();
+
+        System.out.println("-- Enter the project's description: ");
+        String description = scanner.nextLine();
+
+        System.out.println("-- Enter the project's deadline (YYYY-MM-DD): ");
+        String userDate = scanner.nextLine();
+        LocalDate date = LocalDate.parse(userDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        System.out.println("-- Enter the index of the PM who should manage the project: ");
+        int indexPM = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.println("-- Enter the project's sponsor: ");
+        String sponsor = scanner.nextLine();
+
+        System.out.println("-- Enter the budget for the project: ");
+        double budget = scanner.nextDouble();
+        scanner.nextLine();
+
+        Project newProject = new Project(name, description, date, getPMByIndex(indexPM), sponsor, budget);
+
+        companyProjects.add(newProject);
+        projectsCounter++;
+
+        System.out.println("\nThe project has been added successfully.");
+    }
+
+    // usunięcie projektu z systemu
+    public static void removeProject(Scanner scanner) {
+
+        if (companyProjects.isEmpty()) {
+            System.out.println("\nNo projects to remove from the list.");
+            return;
+        }
+
+        System.out.println("\nEnter the index of the project you want to remove.");
+        int userChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        for (Project project : companyProjects) {
+            if (project.getIndex() == userChoice) {
+                companyProjects.remove(project);
+                break;
+            }
+        }
+
+        System.out.println("\nThe project has been removed successfully.");
+
+    }
+
+    // zarządzanie istniejącym projektem
+    public static void manageProject(Scanner scanner) {
+        System.out.println("\n Select the project to manage.");
+        for (Project p : companyProjects) {
+            System.out.println("--> " + p.getIndex() + " " + p.name);
+        }
+
+        int userChoice = scanner.nextInt();
+        Project projectToManage = getProjectByIndex(userChoice);
+        if (projectToManage == null) {
+            System.out.println("\nInvalid index.");
+        }
+        else {
+            CompanyDB.loadMembers(projectToManage);
+            CompanyDB.loadSchedule(projectToManage);
+            CompanyDB.loadTasks(projectToManage);
+            Managing.manageProject(scanner, projectToManage);
+        }
+    }
 }

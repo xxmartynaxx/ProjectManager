@@ -1,35 +1,70 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class Project {
 
     // atrybuty klasy Project
+    private int index;
     public String name;
     public String description;
     public LocalDate deadline;
     public ProjectManager projectManager;
     public Team team;
     public TaskManager taskManager;
+    public Schedule schedule;
     public String sponsor;
     public double budget;
 
     // konstruktor klasy Project
-    public Project(String name, String description, LocalDate deadline, String sponsor, double budget) {
+    public Project(String name, String description, LocalDate deadline, ProjectManager projectManager, String sponsor, double budget) {
         this.name = name;
         this.description = description;
         this.deadline = deadline;
         this.sponsor = sponsor;
         this.budget = budget;
+
+        this.projectManager = projectManager;
+        projectManager.projects.add(this);
+        
+        this.index = Main.projectsCounter;
+
         this.taskManager = new TaskManager();
         taskManager.project = this;
+
         this.team = new Team();
+        team.nickname = String.format("ProjectNo__%d__", index);
+
+        this.schedule  = new Schedule();
     }
 
-    // METODY KLASY
+    public int getIndex() {
+        return this.index;
+    }
 
-    // ustalenie kierownika projektu
-    public void setProjectManager(ProjectManager manager) {
-        this.projectManager = manager;
+    // załadowanie projektu z pliku
+    public static Project loadFromFile(String line) {
+        String[] informations = line.split(";");
+
+        int index = Integer.parseInt(informations[0]);
+        String name = informations[1];
+        String description = informations[2];
+        LocalDate deadline = LocalDate.parse(informations[3], DateTimeFormatter.ISO_LOCAL_DATE);
+        int projectManagerIndex = Integer.parseInt(informations[4]);
+        ProjectManager projectManager = Main.getPMByIndex(projectManagerIndex);
+        String sponsor = informations[5];
+        double budget = Double.parseDouble(informations[6]);
+
+        Project project = new Project(name, description, deadline, projectManager, sponsor, budget);
+        project.index = index;
+        return project;
     }
 
     // wyświetlenie podstawowych informacji o projekcie
@@ -40,13 +75,17 @@ public class Project {
         System.out.println("DEADLINE: " + this.deadline);
         System.out.println("SPONSOR: " + this.sponsor);
         System.out.println("BUDGET: " + this.budget);
-        System.out.println("TEAM: ");
-        (this.team).displayInfo();
     }
 
     // zmiana budżetu przeznaczonego na projekt
-    public void updateBudget(double newBudget) {
+    public void updateBudget(Scanner scanner) {
+        System.out.println("\nEnter a new budget for the project.");
+        double newBudget = scanner.nextDouble();
+
         this.budget = newBudget;
+
+        System.out.println("\nThe budget has been changed successfully.");
+
     }
 
     // monitorowanie budżetu
@@ -64,7 +103,7 @@ public class Project {
         }
 
         if (moneyUsed <= this.budget) {
-            String mU = String.format("The amount of money that has been used so far: %.2f", moneyUsed);
+            String mU = String.format("\nThe amount of money that has been used so far: %.2f", moneyUsed);
             String mN = String.format("The amount of money needed to complete remaining tasks: %.2f", moneyNeeded);
 
             System.out.println(mU);
@@ -77,21 +116,19 @@ public class Project {
             System.out.println(String.format("The budget was exceeded by %.2f amount of money!", exc));
         }
 
-        System.out.println("\n");
-
     }
 
     // wyświetlenie czasu, jaki pozostał na wykonanie projektu
     public void timeLeft() {
-
+        
         Period period = (LocalDate.now()).until(this.deadline);
         int years = period.getYears();
         int months = period.getMonths();
         int days = period.getDays();
 
-        System.out.println("The time remaining to complete the project");
-        System.out.println("Years: " + years + ", months: " + months + ", days: " + days + "\n");
+        System.out.println("\nThe time remaining to complete the project");
+        System.out.println("Years: " + years + ", months: " + months + ", days: " + days);
 
     }
-
+    
 }

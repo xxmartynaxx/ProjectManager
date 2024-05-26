@@ -4,20 +4,20 @@ import java.time.format.DateTimeFormatter;
 public class Meeting {
 
     // atrybuty klasy Meeting
-    public String title;
-    public String place;
-    public LocalDateTime time;
-    public double duration;
+    private int projectIndex;
+    private String title;
+    private String place;
+    private LocalDateTime time;
+    private double duration;
 
     // konstruktor klasy
-    public Meeting(String title, String place, LocalDateTime time, double duration) {
+    public Meeting(int projectIndex, String title, String place, LocalDateTime time, double duration) {
+        this.projectIndex = projectIndex;
         this.title = title;
         this.place = place;
         this.time = time;
         this.duration = duration;
     }
-
-    // METODY KLASY
 
     // wyświetlanie informacji o spotkaniu
     public void displayInfo() {

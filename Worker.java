@@ -1,52 +1,30 @@
 class Worker {
 
     // atrybuty klasy Worker
+    private int index;
     public String firstName;
     public String lastName;
     public String email;
-    private double salary;
 
     // konstruktor klasy
-    public Worker(String firstName, String lastName, String email) {
+    public Worker(int index, String firstName, String lastName, String email, boolean addToCompanyWorkers) {
+        this.index = index;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-    }
 
-    // METODY KLASY
+        if (addToCompanyWorkers) {
+            Main.companyWorkers.add(this);
+        }
+        
+    }
 
     // wyświetlanie informacji o pracowniku
     public void displayInfo() {
-        System.out.println("Name: " + firstName + " " + lastName);
-        System.out.println("Email: " + email);
-        System.out.println("Salary: " + salary);
+        System.out.println(index + "  " + firstName + " " + lastName + "  " + email);
     }
 
-    // zmiana atrybutów pracownika
-    public void changeInfo(String newFirstName, String newLastName, String newEmail) {
-
-        if (this.firstName != newFirstName) {
-            this.firstName = newFirstName;
-        }
-
-        if (this.lastName != newLastName) {
-            this.lastName = newLastName;
-        }
-
-        if (this.email != newEmail) {
-            this.email = newEmail;
-        }
-
+    public int getIndex() {
+        return this.index;
     }
-
-    // ustalanie pensji
-    public void setSalary(double newSalary) {
-        this.salary = newSalary;
-    }
-
-    // uwzględnianie podwyżek
-    public void increaseSalary(double amount) {
-        salary += amount;
-    }
-
 }

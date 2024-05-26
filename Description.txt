@@ -1,6 +1,7 @@
 Opis projektu:
 
-Moim pomysłem na projekt jest program do zarządzania projektami, który wspiera organizację i koordynację działań na każdym etapie realizacji projektu. Realizacja projektów w przedsiębiorstwie wymaga szczegółowego planowania i ścisłej współpracy w zespole. Program, który zamierzam stworzyć, pomoże w zarządzaniu zadaniami, pilnowaniu budżetu oraz wszelkich terminów, a także w monitorowaniu postępów prac.
+Moim pomysłem na projekt jest program do zarządzania projektami, który wspiera organizację i koordynację działań na każdym etapie realizacji projektu. Realizacja projektów w przedsiębiorstwie wymaga szczegółowego planowania i ścisłej współpracy w zespole. Program, który zamierzam stworzyć, pomoże w zarządzaniu zadaniami, pilnowaniu budżetu oraz wszelkich terminów, a także w monitorowaniu postępów prac. 
+Projekt wykonam w Javie i rozszerzę go o konsolowy interfejs użytkownika.
 
 Głównymi aspektami programu będą:
 
@@ -14,7 +15,7 @@ Możliwość modyfikacji zespołu, pisania raportów, do których wgląd ma kier
 Odpowiednie przypisywanie zadań pracownikom, na podstawie przydzielonych im uprawnień (w tym możliwość przepisywania zadań innym pracownikom oraz praca w grupach), podział zadań według ich statusu (nieukończone/ukończone), edytowanie terminów zadań lub ich szacowanego kosztu.
 
 -> Budowanie harmonogramu:
-Określenie dnia tygodnia, w którym będą sporządzane raporty oraz zapisywanie nadchodzących wydarzeń i spotkań.
+Zapisywanie nadchodzących wydarzeń i spotkań zespołu.
 
 -> Monitorowanie postępów oraz śledzenie budżetu:
 Generowanie raportów o postępach prac oraz śledzenie wydatków w czasie realizacji projektu.
