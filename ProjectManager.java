@@ -14,6 +14,12 @@ class ProjectManager extends Worker {
 
     // wyświetlanie listy projektów
     public void showProjects() {
+
+        if (projects.size() == 0) {
+            System.out.println("-- The list of projects is empty. Consider creating a project first.");
+            return;
+        }
+
         for (Project project : projects) {
             System.out.println("--> " + project.name);
         }

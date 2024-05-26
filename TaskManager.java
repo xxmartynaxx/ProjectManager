@@ -15,6 +15,11 @@ public class TaskManager {
 
     // wyświetlenie zadań
     public void showTasks() {
+
+        if (tasks.size() == 0) {
+            System.out.println("\nThe list of tasks is empty. Consider adding the task first.");
+            return;
+        }
         for (Task task : tasks) {
             task.displayinfo();
             System.out.println("\n");
@@ -25,6 +30,11 @@ public class TaskManager {
     // przeniesienie wykonanego zadania do listy zadań ukończonych
     // aktualizacja budżetu projektu
     public void setAsCompleted(Scanner scanner, Project project) {
+
+        if (tasks.size() == 0) {
+            System.out.println("\nThe list of tasks is empty. Consider adding the task first.");
+            return;
+        }
 
         System.out.println("\nEnter the index of the task you want to set as completed.");
         int taskIndex = scanner.nextInt();
@@ -44,6 +54,11 @@ public class TaskManager {
 
     // przepisanie zadania na innego członka zespołu
     public void reassignTask(Scanner scanner, Project project) {
+
+        if (tasks.size() == 0) {
+            System.out.println("\nThe list of tasks is empty. Consider adding the task first.");
+            return;
+        }
 
         System.out.println(
                 "\nEnter the index of the task you want to assign to another person, the index of the team member you want to take the task from, and the index of the team member you want to assign the task to.");
@@ -77,6 +92,11 @@ public class TaskManager {
     // zmiana terminu wykonania zadania
     public void changeTaskDeadline(Scanner scanner, Project project) {
 
+        if (tasks.size() == 0) {
+            System.out.println("\nThe list of tasks is empty. Consider adding the task first.");
+            return;
+        }
+
         System.out.println(
                 "\nEnter the index of the task for which you want to change the due date and the new due date.");
         int taskIndex = scanner.nextInt();
@@ -95,6 +115,11 @@ public class TaskManager {
 
     // aktualizowanie szacowanego kosztu wykonania zadania
     public void updateTaskEstimatedCost(Scanner scanner, Project project) {
+
+        if (tasks.size() == 0) {
+            System.out.println("\nThe list of tasks is empty. Consider adding the task first.");
+            return;
+        }
 
         System.out.println(
                 "\nEnter the index of the task for which you want to change the estimated cost and the new estimated cost.");
@@ -115,6 +140,7 @@ public class TaskManager {
     public void addTask(Scanner scanner, Project project) {
 
         System.out.println("\nTo add a task, complete the form below.");
+        scanner.nextLine();
 
         System.out.println("-- Enter the name of the task: ");
         String name = scanner.nextLine();
@@ -149,6 +175,8 @@ public class TaskManager {
 
         tasks.add(newTask);
         tasksCounter++;
+
+        System.out.println("\nThe task has been added successfully.");
     }
 
     // wyświetlenie postępu projektu

@@ -20,6 +20,35 @@ public class CompanyDB {
         loadProjects();
     }
 
+    public static void clearFiles(Project project) {
+        String projectIndex = Integer.toString(project.getIndex());
+        clearFile("DB_Tasks.txt", projectIndex);
+        clearFile("DB_Members.txt", projectIndex);
+        clearFile("DB_Meetings.txt", projectIndex);
+    }
+
+    private static void clearFile(String fileName, String projectIndex) {
+        File file = new File(fileName);
+        File tempFile = new File("Temporary.txt");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file));
+                PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith(projectIndex)) {
+                    writer.println(line);
+                }
+            }
+
+        } catch (IOException e) {
+            System.out.println("An error occurred while clearing the file.");
+        }
+
+        file.delete();
+        tempFile.renameTo(file);
+    }
+
     public static void loadProjects() {
 
         Main.companyProjects = new ArrayList<Project>();
@@ -43,9 +72,16 @@ public class CompanyDB {
 
         project.taskManager.tasks = new ArrayList<Task>();
         project.taskManager.completedTasks = new ArrayList<Task>();
+        File file = new File("DB_Tasks.txt");
+        File tempFile = new File("Temporary.txt");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("DB_Tasks.txt"));
-                PrintWriter writer = new PrintWriter(new FileWriter("Temporary.txt"))) {
+        if (!file.exists()) {
+            System.out.println("File does not exist yet, skipping tasks loading.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file));
+                PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -67,19 +103,24 @@ public class CompanyDB {
             System.out.println("An error occurred while loading the tasks file.");
         }
 
-        File oldFile = new File("DB_Tasks.txt");
-        oldFile.delete();
-        File newFile = new File("Temporary.txt");
-        newFile.renameTo(oldFile);
+        file.delete();
+        tempFile.renameTo(file);
 
     }
 
     public static void loadMembers(Project project) {
 
         project.team.members = new ArrayList<TeamMember>();
+        File file = new File("DB_Members.txt");
+        File tempFile = new File("Temporary.txt");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("DB_Members.txt"));
-                PrintWriter writer = new PrintWriter(new FileWriter("Temporary.txt"))) {
+        if (!file.exists()) {
+            System.out.println("File does not exist yet, skipping members loading.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file));
+                PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -97,19 +138,24 @@ public class CompanyDB {
             System.out.println("An error occurred while loading the members file.");
         }
 
-        File oldFile = new File("DB_Members.txt");
-        oldFile.delete();
-        File newFile = new File("Temporary.txt");
-        newFile.renameTo(oldFile);
+        file.delete();
+        tempFile.renameTo(file);
 
     }
 
     public static void loadSchedule(Project project) {
 
         project.schedule.meetings = new ArrayList<Meeting>();
+        File file = new File("DB_Meetings.txt");
+        File tempFile = new File("Temporary.txt");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("DB_Meetings.txt"));
-                PrintWriter writer = new PrintWriter(new FileWriter("Temporary.txt"))) {
+        if (!file.exists()) {
+            System.out.println("File does not exist yet, skipping schedule loading.");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file));
+                PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
@@ -127,10 +173,8 @@ public class CompanyDB {
             System.out.println("An error occurred while loading the meetings file.");
         }
 
-        File oldFile = new File("DB_Meetings.txt");
-        oldFile.delete();
-        File newFile = new File("Temporary.txt");
-        newFile.renameTo(oldFile);
+        file.delete();
+        tempFile.renameTo(file);
 
     }
 

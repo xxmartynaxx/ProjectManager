@@ -11,6 +11,12 @@ class Team {
     public void displayInfo() {
         System.out.println("Nickname: " + this.nickname);
         System.out.println("Team members:");
+
+        if (members.size() == 0) {
+            System.out.println("-- The list of members is empty. Consider adding a new member to your team first.");
+            return;
+        }
+
         for (TeamMember member : members) {
             System.out.println("--> " + member.getIndex() + " " + member.firstName + " " + member.lastName);
         }
@@ -21,22 +27,26 @@ class Team {
 
         System.out.println("\nTo add a Team Member, complete the form below. ");
 
-        System.out.println("\nEnter the index of the Worker, you want to add to the team.");
+        System.out.println("-- Enter the index of the Worker, you want to add to the team:");
         int workerIndex = scanner.nextInt();
 
         if (Main.getWorkerByIndex(workerIndex) != null && getMemberByIndex(workerIndex) == null) {
 
-            System.out.println("\nEnter the permission status for this Worker.");
+            System.out.println("-- Enter the permission status for this Worker:");
             int permissionStatus = scanner.nextInt();
 
-            TeamMember newMember = new TeamMember(workerIndex, project.getIndex(), Main.getWorkerByIndex(workerIndex).firstName, Main.getWorkerByIndex(workerIndex).lastName, Main.getWorkerByIndex(workerIndex).email, permissionStatus);
+            TeamMember newMember = new TeamMember(workerIndex, project.getIndex(),
+                    Main.getWorkerByIndex(workerIndex).firstName, Main.getWorkerByIndex(workerIndex).lastName,
+                    Main.getWorkerByIndex(workerIndex).email, permissionStatus);
 
             members.add(newMember);
+            System.out.println("\nThe member has been added successfully.");
 
         }
 
         else {
-            System.out.println("\nCould not find any Worker with this index or this Worker is already a part of this team.");
+            System.out.println(
+                    "\nCould not find any Worker with this index or this Worker is already a part of this team.");
             return;
         }
 
@@ -44,6 +54,12 @@ class Team {
 
     // usunięcie członka z zespołu
     public void removeMember(Scanner scanner) {
+
+        if (members.size() == 0) {
+            System.out.println("\nThe list of members is empty.");
+            return;
+        }
+
         System.out.println("\nEnter the index of the team member to remove from the team.");
         int indexTM = scanner.nextInt();
 

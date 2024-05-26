@@ -143,7 +143,7 @@ public class Main {
     public static void removeProject(Scanner scanner) {
 
         if (companyProjects.isEmpty()) {
-            System.out.println("\nNo projects to remove from the list.");
+            System.out.println("\nNo projects to remove from the system.");
             return;
         }
 
@@ -154,6 +154,7 @@ public class Main {
         for (Project project : companyProjects) {
             if (project.getIndex() == userChoice) {
                 companyProjects.remove(project);
+                CompanyDB.clearFiles(project);
                 break;
             }
         }
@@ -166,7 +167,7 @@ public class Main {
     public static void manageProject(Scanner scanner) {
 
         if (companyProjects.isEmpty()) {
-            System.out.println("\nNo projects on the list to manage.");
+            System.out.println("\nNo projects in the system to manage.");
             return;
         }
 

@@ -28,8 +28,8 @@ class Task {
 
     // wyświetlanie informacji
     public void displayinfo() {
-        System.out.println("Name: " + name);
-        System.out.println("Description: " + description);
+        System.out.println(index + " " + " " + name);
+        System.out.println(description);
         System.out.println(String.format("Required permission status: %d", requiredPermissionStatus));
         System.out.println(String.format("Deadline: %s", deadline));
         System.out.println(String.format("Estimated cost: %.2f", estimatedCost));

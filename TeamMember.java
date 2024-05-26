@@ -51,7 +51,7 @@ class TeamMember extends Worker {
             writer.write(idea + "\n");
             writer.write("-- ADDED BY: " + this.firstName + " " + this.lastName + " -- " + LocalDate.now() + " --\n\n");
         } catch (IOException e) {
-            System.out.println("An error occurred while writing to the common file.");
+            System.out.println("\nAn error occurred while writing to the common file.");
         }
     }
 

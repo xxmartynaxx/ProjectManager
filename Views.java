@@ -59,7 +59,7 @@ public class Views {
             System.out.println("\nSelect one of the actions below:");
             System.out.println("1. Show some information about the project.");
             System.out.println("2. Update the project's budget.");
-            System.out.println("3. Show some information about changes that occurred in the budget during the project realization.");
+            System.out.println("3. Show some information about the budget.");
             System.out.println("4. Show the time left for project realization.");
             System.out.println("5. Go back.");
 
