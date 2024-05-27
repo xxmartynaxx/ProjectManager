@@ -28,10 +28,10 @@ public class Managing {
                 case 5 -> Views.projectManagerView(scanner, project);
                 case 6 -> Views.scheduleView(scanner, project);
                 case 7 -> {
-                    CompanyDB.saveMembersToFile(project.team.members);
-                    CompanyDB.saveTasksToFile(project.taskManager.tasks);
-                    CompanyDB.saveTasksToFile(project.taskManager.completedTasks);
-                    CompanyDB.saveScheduleToFile(project.schedule.meetings);
+                    CompanyDB.saveMembersToFile(project.getTeam().getMembers());
+                    CompanyDB.saveTasksToFile(project.getTaskManager().getTasks());
+                    CompanyDB.saveTasksToFile(project.getTaskManager().getCompletedTasks());
+                    CompanyDB.saveScheduleToFile(project.getSchedule().getMeetings());
                     goBack = true;
                 }
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 7.\n");

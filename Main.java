@@ -32,7 +32,7 @@ public class Main {
             System.out.println("No projects have been added to the list yet.");
         } else {
             for (Project p : companyProjects) {
-                System.out.println(p.getIndex() + "  " + p.name);
+                System.out.println(p.getIndex() + "  " + p.getName());
             }
         }
 
@@ -115,6 +115,11 @@ public class Main {
         String userDate = scanner.nextLine();
         LocalDate date = LocalDate.parse(userDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
+        if (!date.isAfter(LocalDate.now())) {
+            System.out.println("\nThe deadline cannot refer to a date that has already passed.");
+            return;
+        }
+
         System.out.println("-- Enter the index of the PM who should manage the project: ");
         int indexPM = scanner.nextInt();
         scanner.nextLine();
@@ -173,13 +178,13 @@ public class Main {
 
         System.out.println("\nSelect the project to manage.");
         for (Project p : companyProjects) {
-            System.out.println("--> " + p.getIndex() + " " + p.name);
+            System.out.println("--> " + p.getIndex() + " " + p.getName());
         }
 
         int userChoice = scanner.nextInt();
         Project projectToManage = getProjectByIndex(userChoice);
         if (projectToManage == null) {
-            System.out.println("\nInvalid index.");
+            System.out.println("\nInvalid index. There is no project in the system with such index");
         } else {
             CompanyDB.loadMembers(projectToManage);
             CompanyDB.loadSchedule(projectToManage);

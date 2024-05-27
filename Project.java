@@ -7,15 +7,15 @@ public class Project {
 
     // atrybuty klasy Project
     private int index;
-    public String name;
-    public String description;
-    public LocalDate deadline;
-    public ProjectManager projectManager;
-    public Team team;
-    public TaskManager taskManager;
-    public Schedule schedule;
-    public String sponsor;
-    public double budget;
+    private String name;
+    private String description;
+    private LocalDate deadline;
+    private ProjectManager projectManager;
+    private Team team;
+    private TaskManager taskManager;
+    private Schedule schedule;
+    private String sponsor;
+    private double budget;
 
     // konstruktor klasy Project
     public Project(String name, String description, LocalDate deadline, ProjectManager projectManager, String sponsor,
@@ -27,21 +27,48 @@ public class Project {
         this.budget = budget;
 
         this.projectManager = projectManager;
-        projectManager.projects.add(this);
+        projectManager.addProject(this);;
 
         this.index = Main.projectsCounter;
 
         this.taskManager = new TaskManager();
-        taskManager.project = this;
 
         this.team = new Team();
-        team.nickname = String.format("ProjectNo__%d__", index);
+        team.setNickname(String.format("ProjectNo__%d__", index));
 
         this.schedule = new Schedule();
     }
 
     public int getIndex() {
         return this.index;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public ProjectManager getProjectManager() {
+        return this.projectManager;
+    }
+
+    public Team getTeam() {
+        return this.team;
+    }
+
+    public TaskManager getTaskManager() {
+        return this.taskManager;
+    }
+
+    public Schedule getSchedule() {
+        return this.schedule;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
+    public double getBudget() {
+        return this.budget;
     }
 
     // załadowanie projektu z pliku
@@ -90,12 +117,12 @@ public class Project {
         double moneyUsed = 0;
         double moneyNeeded = 0;
 
-        for (Task completedTask : (this.taskManager).completedTasks) {
-            moneyUsed += completedTask.estimatedCost;
+        for (Task completedTask : (this.taskManager).getCompletedTasks()) {
+            moneyUsed += completedTask.getEstimatedCost();
         }
 
-        for (Task task : (this.taskManager).tasks) {
-            moneyNeeded += task.estimatedCost;
+        for (Task task : (this.taskManager).getTasks()) {
+            moneyNeeded += task.getEstimatedCost();
         }
 
         if (moneyUsed <= this.budget) {

@@ -2,9 +2,9 @@ class Worker {
 
     // atrybuty klasy Worker
     private int index;
-    public String firstName;
-    public String lastName;
-    public String email;
+    private String firstName;
+    private String lastName;
+    private String email;
 
     // konstruktor klasy
     public Worker(int index, String firstName, String lastName, String email, boolean addToCompanyWorkers) {
@@ -26,5 +26,17 @@ class Worker {
 
     public int getIndex() {
         return this.index;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 }

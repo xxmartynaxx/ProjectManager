@@ -4,8 +4,28 @@ import java.util.Scanner;
 class Team {
 
     // zespół ma swoją unikalną nazwę, listę należących do niego członków
-    public String nickname;
-    public ArrayList<TeamMember> members = new ArrayList<TeamMember>();
+    private String nickname;
+    private ArrayList<TeamMember> members = new ArrayList<TeamMember>();
+
+    public void initializeMembersArray() {
+        this.members = new ArrayList<TeamMember>();
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getNickname() {
+        return this.nickname;
+    }
+
+    public ArrayList<TeamMember> getMembers() {
+        return this.members;
+    }
+
+    public void addMember(TeamMember teamMember) {
+        this.members.add(teamMember);
+    }
 
     // wypisanie informacji o zespole
     public void displayInfo() {
@@ -18,7 +38,7 @@ class Team {
         }
 
         for (TeamMember member : members) {
-            System.out.println("--> " + member.getIndex() + " " + member.firstName + " " + member.lastName);
+            System.out.println("--> " + member.getIndex() + " " + member.getFirstName() + " " + member.getLastName());
         }
     }
 
@@ -36,8 +56,8 @@ class Team {
             int permissionStatus = scanner.nextInt();
 
             TeamMember newMember = new TeamMember(workerIndex, project.getIndex(),
-                    Main.getWorkerByIndex(workerIndex).firstName, Main.getWorkerByIndex(workerIndex).lastName,
-                    Main.getWorkerByIndex(workerIndex).email, permissionStatus);
+                    Main.getWorkerByIndex(workerIndex).getFirstName(), Main.getWorkerByIndex(workerIndex).getLastName(),
+                    Main.getWorkerByIndex(workerIndex).getEmail(), permissionStatus);
 
             members.add(newMember);
             System.out.println("\nThe member has been added successfully.");

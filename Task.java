@@ -7,12 +7,12 @@ class Task {
     private int index;
     private int projectIndex;
     private int memberIndex;
-    public String name;
-    public String description;
-    public int requiredPermissionStatus;
-    public LocalDate deadline;
-    public double estimatedCost;
-    public boolean isCompleted;
+    private String name;
+    private String description;
+    private int requiredPermissionStatus;
+    private LocalDate deadline;
+    private double estimatedCost;
+    private boolean isCompleted;
 
     // konstruktor klasy
     public Task(int memberIndex, String name, String description, int requiredPermissionStatus, LocalDate deadline,
@@ -57,6 +57,38 @@ class Task {
 
     public void setMemberIndex(int newMemberIndex) {
         this.memberIndex = newMemberIndex;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public int getRequiredPermissionStatus() {
+        return this.requiredPermissionStatus;
+    }
+
+    public void setNewDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
+
+    public void setNewEstimatedCost(double newEC) {
+        this.estimatedCost = newEC;
+    }
+
+    public double getEstimatedCost() {
+        return this.estimatedCost;
+    }
+
+    public void updateStatus() {
+        this.isCompleted = true;
+    }
+
+    public boolean getStatus() {
+        return this.isCompleted;
     }
 
     public String parseToString() {

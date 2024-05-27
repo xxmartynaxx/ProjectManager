@@ -8,9 +8,8 @@ public class TaskManager {
     // informacja w ramach jakiego projektu,
     // przechowuje listę zadań do wykonania oraz
     // listę skończonych zadań
-    public Project project;
-    public ArrayList<Task> tasks = new ArrayList<Task>();
-    public ArrayList<Task> completedTasks = new ArrayList<Task>();
+    private ArrayList<Task> tasks = new ArrayList<Task>();
+    private ArrayList<Task> completedTasks = new ArrayList<Task>();
     private static int tasksCounter = 1;
 
     // wyświetlenie zadań
@@ -24,6 +23,27 @@ public class TaskManager {
             task.displayinfo();
             System.out.println("\n");
         }
+    }
+
+    public void initializeTasksArray() {
+        this.tasks = new ArrayList<Task>();
+        this.completedTasks = new ArrayList<Task>();
+    }
+
+    public void addToTasks(Task task) {
+        this.tasks.add(task);
+    }
+
+    public void addToCompletedTasks(Task task) {
+        this.completedTasks.add(task);
+    }
+
+    public ArrayList<Task> getTasks() {
+        return this.tasks;
+    }
+
+    public ArrayList<Task> getCompletedTasks() {
+        return this.completedTasks;
     }
 
     // wykonanie zadania przez któregoś z członków zespołu
@@ -41,10 +61,11 @@ public class TaskManager {
 
         for (Task task : tasks) {
             if (task.getIndex() == taskIndex) {
-                task.isCompleted = true;
+                task.updateStatus();
+                ;
                 completedTasks.add(task);
                 tasks.remove(task);
-                project.budget -= task.estimatedCost;
+                project.setBudget(project.getBudget() - task.getEstimatedCost());
                 break;
             }
         }
@@ -69,9 +90,10 @@ public class TaskManager {
         for (Task task : tasks) {
             if (task.getIndex() == taskIndex) {
                 // sprawdzenie czy są w tym samym zespole
-                if (project.team.getMemberByIndex(removeFrom) != null
-                        && project.team.getMemberByIndex(moveTo) != null) {
-                    if (project.team.getMemberByIndex(moveTo).getPermissionStatus() >= task.requiredPermissionStatus) {
+                if (project.getTeam().getMemberByIndex(removeFrom) != null
+                        && project.getTeam().getMemberByIndex(moveTo) != null) {
+                    if (project.getTeam().getMemberByIndex(moveTo).getPermissionStatus() >= task
+                            .getRequiredPermissionStatus()) {
                         task.setMemberIndex(moveTo);
                     } else {
                         System.out.println(
@@ -101,11 +123,16 @@ public class TaskManager {
                 "\nEnter the index of the task for which you want to change the due date and the new due date.");
         int taskIndex = scanner.nextInt();
         String deadline = scanner.nextLine();
+        LocalDate newDeadline = LocalDate.parse(deadline);
+
+        if (!newDeadline.isAfter(LocalDate.now())) {
+            System.out.println("\nThe deadline cannot refer to a date that has already passed.");
+            return;
+        }
 
         for (Task task : tasks) {
             if (task.getIndex() == taskIndex) {
-                LocalDate newDeadline = LocalDate.parse(deadline);
-                task.deadline = newDeadline;
+                task.setNewDeadline(newDeadline);
                 break;
             }
         }
@@ -128,7 +155,7 @@ public class TaskManager {
 
         for (Task task : tasks) {
             if (task.getIndex() == taskIndex) {
-                task.estimatedCost = newEstimatedCost;
+                task.setNewEstimatedCost(newEstimatedCost);
                 break;
             }
         }
@@ -156,6 +183,11 @@ public class TaskManager {
         String date = scanner.nextLine();
         LocalDate deadline = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
+        if (!deadline.isAfter(LocalDate.now())) {
+            System.out.println("\nThe deadline cannot refer to a date that has already passed.");
+            return;
+        }
+
         System.out.println("-- Enter the task's estimated cost: ");
         double estimatedCost = scanner.nextDouble();
         scanner.nextLine();
@@ -164,7 +196,7 @@ public class TaskManager {
         int TMIndex = scanner.nextInt();
         scanner.nextLine();
 
-        if (project.team.getMemberByIndex(TMIndex) == null) {
+        if (project.getTeam().getMemberByIndex(TMIndex) == null) {
             System.out.println("This Worker is not a part of this team.");
             return;
         }

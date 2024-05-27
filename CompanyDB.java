@@ -70,8 +70,7 @@ public class CompanyDB {
 
     public static void loadTasks(Project project) {
 
-        project.taskManager.tasks = new ArrayList<Task>();
-        project.taskManager.completedTasks = new ArrayList<Task>();
+        project.getTaskManager().initializeTasksArray();
         File file = new File("DB_Tasks.txt");
         File tempFile = new File("Temporary.txt");
 
@@ -92,10 +91,10 @@ public class CompanyDB {
 
                 else {
                     Task task = Task.loadFromFile(line);
-                    if (task.isCompleted) {
-                        project.taskManager.completedTasks.add(task);
+                    if (task.getStatus()) {
+                        project.getTaskManager().addToCompletedTasks(task);;
                     } else {
-                        project.taskManager.tasks.add(task);
+                        project.getTaskManager().addToTasks(task);;
                     }
                 }
             }
@@ -110,7 +109,7 @@ public class CompanyDB {
 
     public static void loadMembers(Project project) {
 
-        project.team.members = new ArrayList<TeamMember>();
+        project.getTeam().initializeMembersArray();
         File file = new File("DB_Members.txt");
         File tempFile = new File("Temporary.txt");
 
@@ -131,7 +130,7 @@ public class CompanyDB {
 
                 else {
                     TeamMember teamMember = TeamMember.loadFromFile(line);
-                    project.team.members.add(teamMember);
+                    project.getTeam().addMember(teamMember);;
                 }
             }
         } catch (IOException e) {
@@ -145,7 +144,7 @@ public class CompanyDB {
 
     public static void loadSchedule(Project project) {
 
-        project.schedule.meetings = new ArrayList<Meeting>();
+        project.getSchedule().initializeMeetingsArray();
         File file = new File("DB_Meetings.txt");
         File tempFile = new File("Temporary.txt");
 
@@ -166,7 +165,7 @@ public class CompanyDB {
 
                 else {
                     Meeting meeting = Meeting.loadFromFile(line);
-                    project.schedule.meetings.add(meeting);
+                    project.getSchedule().addMeeting(meeting);;
                 }
             }
         } catch (IOException e) {

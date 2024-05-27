@@ -18,13 +18,13 @@ public class Views {
 
             int userChoice = scanner.nextInt();
             switch (userChoice) {
-                case 1 -> project.taskManager.showTasks();
-                case 2 -> project.taskManager.setAsCompleted(scanner, project);
-                case 3 -> project.taskManager.reassignTask(scanner, project);
-                case 4 -> project.taskManager.changeTaskDeadline(scanner, project);
-                case 5 -> project.taskManager.updateTaskEstimatedCost(scanner, project);
-                case 6 -> project.taskManager.addTask(scanner, project);
-                case 7 -> project.taskManager.generateReport();
+                case 1 -> project.getTaskManager().showTasks();
+                case 2 -> project.getTaskManager().setAsCompleted(scanner, project);
+                case 3 -> project.getTaskManager().reassignTask(scanner, project);
+                case 4 -> project.getTaskManager().changeTaskDeadline(scanner, project);
+                case 5 -> project.getTaskManager().updateTaskEstimatedCost(scanner, project);
+                case 6 -> project.getTaskManager().addTask(scanner, project);
+                case 7 -> project.getTaskManager().generateReport();
                 case 8 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 8.\n");
             }
@@ -43,9 +43,9 @@ public class Views {
 
             int userChoice = scanner.nextInt();
             switch (userChoice) {
-                case 1 -> project.team.displayInfo();
-                case 2 -> project.team.addMember(scanner, project);
-                case 3 -> project.team.removeMember(scanner);
+                case 1 -> project.getTeam().displayInfo();
+                case 2 -> project.getTeam().addMember(scanner, project);
+                case 3 -> project.getTeam().removeMember(scanner);
                 case 4 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 4.\n");
             }
@@ -78,7 +78,7 @@ public class Views {
     public static void teamMemberView(Scanner scanner, Project project) {
         System.out.println("\nEnter your index for verification.");
         int userIndex = scanner.nextInt();
-        TeamMember teamMember = project.team.getMemberByIndex(userIndex);
+        TeamMember teamMember = project.getTeam().getMemberByIndex(userIndex);
 
         if (teamMember != null) {
 
@@ -108,7 +108,7 @@ public class Views {
         System.out.println("\nEnter your index for verification.");
         int userIndex = scanner.nextInt();
 
-        if (userIndex == project.projectManager.getIndex()) {
+        if (userIndex == project.getProjectManager().getIndex()) {
 
             boolean goBack = false;
             while (!goBack) {
@@ -118,7 +118,7 @@ public class Views {
 
                 int userChoice = scanner.nextInt();
                 switch (userChoice) {
-                    case 1 -> project.projectManager.showProjects();
+                    case 1 -> project.getProjectManager().showProjects();
                     case 2 -> goBack = true;
                     default -> System.out.println("\nInvalid choice. Please choose between 1 and 2.\n");
                 }
@@ -141,8 +141,8 @@ public class Views {
 
             int userChoice = scanner.nextInt();
             switch (userChoice) {
-                case 1 -> project.schedule.showMeetings();
-                case 2 -> project.schedule.addMeeting(scanner, project);
+                case 1 -> project.getSchedule().showMeetings();
+                case 2 -> project.getSchedule().addMeeting(scanner, project);
                 case 3 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 3.\n");
             }

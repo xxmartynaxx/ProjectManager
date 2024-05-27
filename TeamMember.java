@@ -27,11 +27,11 @@ class TeamMember extends Worker {
     // wyświetlanie listy zadań członka zespołu
     public void showTasks(Project project) {
 
-        System.out.println(this.firstName + "'s tasks: ");
-        for (Task task : project.taskManager.tasks) {
+        System.out.println(this.getFirstName() + "'s tasks: ");
+        for (Task task : project.getTaskManager().getTasks()) {
             if (task.getMemberIndex() == this.getIndex()) {
-                System.out.println("--> " + task.name);
-                System.out.println(task.description);
+                System.out.println("--> " + task.getName());
+                System.out.println(task.getDescription());
                 System.out.println("\n");
             }
         }
@@ -44,12 +44,12 @@ class TeamMember extends Worker {
                 "\nEnter the information you want to add to the common file.\nNote: Everyone in the team will be able to see this information.");
         String idea = scanner.nextLine();
 
-        String fileName = project.team.nickname + "_commonFile.txt";
+        String fileName = project.getTeam().getNickname() + "_commonFile.txt";
         File file = new File(fileName);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.write(idea + "\n");
-            writer.write("-- ADDED BY: " + this.firstName + " " + this.lastName + " -- " + LocalDate.now() + " --\n\n");
+            writer.write("-- ADDED BY: " + this.getFirstName() + " " + this.getLastName() + " -- " + LocalDate.now() + " --\n\n");
         } catch (IOException e) {
             System.out.println("\nAn error occurred while writing to the common file.");
         }
@@ -75,8 +75,7 @@ class TeamMember extends Worker {
 
         Worker w = Main.getWorkerByIndex(wIndex);
 
-        TeamMember teamMember = new TeamMember(wIndex, pIndex, w.firstName, w.lastName, w.email, pS);
-
+        TeamMember teamMember = new TeamMember(wIndex, pIndex, w.getFirstName(), w.getLastName(), w.getEmail(), pS);
         return teamMember;
     }
 

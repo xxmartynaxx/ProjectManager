@@ -6,7 +6,19 @@ import java.util.Scanner;
 public class Schedule {
 
     // harmonogram zawiera listę nadchodzących spotkań
-    public ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+    private ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+
+    public void initializeMeetingsArray() {
+        this.meetings = new ArrayList<Meeting>();
+    }
+
+    public ArrayList<Meeting> getMeetings() {
+        return this.meetings;
+    }
+
+    public void addMeeting(Meeting meeting) {
+        this.meetings.add(meeting);
+    }
 
     // wyświetlenie listy wszystkich spotkań
     public void showMeetings() {
@@ -37,6 +49,11 @@ public class Schedule {
         System.out.println("-- Enter the time of the meeting (YYYY-MM-DD HH:MM): ");
         String userDate = scanner.nextLine();
         LocalDateTime time = LocalDateTime.parse(userDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        if (!time.isAfter(LocalDateTime.now())) {
+            System.out.println("\nThe time of the meeting cannot refer to a date that has already passed.");
+            return;
+        }
 
         System.out.println("-- Enter the duration of the meeting (hours): ");
         double duration = scanner.nextDouble();
