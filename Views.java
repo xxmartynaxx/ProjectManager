@@ -44,7 +44,7 @@ public class Views {
             int userChoice = scanner.nextInt();
             switch (userChoice) {
                 case 1 -> project.getTeam().displayInfo();
-                case 2 -> project.getTeam().addMember(scanner, project);
+                case 2 -> project.getTeam().addNewMember(scanner, project);
                 case 3 -> project.getTeam().removeMember(scanner);
                 case 4 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 4.\n");
@@ -142,7 +142,7 @@ public class Views {
             int userChoice = scanner.nextInt();
             switch (userChoice) {
                 case 1 -> project.getSchedule().showMeetings();
-                case 2 -> project.getSchedule().addMeeting(scanner, project);
+                case 2 -> project.getSchedule().addNewMeeting(scanner, project);
                 case 3 -> goBack = true;
                 default -> System.out.println("\nInvalid choice. Please choose between 1 and 3.\n");
             }

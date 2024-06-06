@@ -16,7 +16,7 @@ class Worker {
         if (addToCompanyWorkers) {
             Main.companyWorkers.add(this);
         }
-        
+
     }
 
     // wyświetlanie informacji o pracowniku

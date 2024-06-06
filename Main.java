@@ -185,7 +185,9 @@ public class Main {
         Project projectToManage = getProjectByIndex(userChoice);
         if (projectToManage == null) {
             System.out.println("\nInvalid index. There is no project in the system with such index");
-        } else {
+        }
+
+        else {
             CompanyDB.loadMembers(projectToManage);
             CompanyDB.loadSchedule(projectToManage);
             CompanyDB.loadTasks(projectToManage);

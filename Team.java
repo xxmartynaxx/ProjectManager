@@ -43,7 +43,7 @@ class Team {
     }
 
     // dodanie nowego członka do zespołu
-    public void addMember(Scanner scanner, Project project) {
+    public void addNewMember(Scanner scanner, Project project) {
 
         System.out.println("\nTo add a Team Member, complete the form below. ");
 

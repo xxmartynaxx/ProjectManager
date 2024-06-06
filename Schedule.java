@@ -35,7 +35,7 @@ public class Schedule {
     }
 
     // dodanie spotkania
-    public void addMeeting(Scanner scanner, Project project) {
+    public void addNewMeeting(Scanner scanner, Project project) {
 
         System.out.println("\nTo add a meeting, complete the form below.");
         scanner.nextLine();

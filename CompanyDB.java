@@ -61,7 +61,7 @@ public class CompanyDB {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("Projects file not found.");
+            System.out.println("Projects file has not been created yet.");
 
         } catch (IOException e) {
             System.out.println("An error occured while loading the projects file.");
