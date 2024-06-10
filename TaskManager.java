@@ -5,14 +5,11 @@ import java.util.Scanner;
 
 public class TaskManager {
 
-    // informacja w ramach jakiego projektu,
-    // przechowuje listę zadań do wykonania oraz
-    // listę skończonych zadań
+    // atrybuty klasy
     private ArrayList<Task> tasks = new ArrayList<Task>();
     private ArrayList<Task> completedTasks = new ArrayList<Task>();
     private static int tasksCounter = 1;
 
-    // wyświetlenie zadań
     public void showTasks() {
 
         if (tasks.size() == 0) {
@@ -46,9 +43,6 @@ public class TaskManager {
         return this.completedTasks;
     }
 
-    // wykonanie zadania przez któregoś z członków zespołu
-    // przeniesienie wykonanego zadania do listy zadań ukończonych
-    // aktualizacja budżetu projektu
     public void setAsCompleted(Scanner scanner, Project project) {
 
         if (tasks.size() == 0) {
@@ -62,7 +56,6 @@ public class TaskManager {
         for (Task task : tasks) {
             if (task.getIndex() == taskIndex) {
                 task.updateStatus();
-                ;
                 completedTasks.add(task);
                 tasks.remove(task);
                 project.setBudget(project.getBudget() - task.getEstimatedCost());
@@ -73,7 +66,6 @@ public class TaskManager {
         System.out.println("\nTask's status has been changed successfully.");
     }
 
-    // przepisanie zadania na innego członka zespołu
     public void reassignTask(Scanner scanner, Project project) {
 
         if (tasks.size() == 0) {
@@ -88,18 +80,25 @@ public class TaskManager {
         int moveTo = scanner.nextInt();
 
         for (Task task : tasks) {
+
             if (task.getIndex() == taskIndex) {
+
                 // sprawdzenie czy są w tym samym zespole
                 if (project.getTeam().getMemberByIndex(removeFrom) != null
                         && project.getTeam().getMemberByIndex(moveTo) != null) {
+
+                    // sprawdzenie czy nowa osoba ma odpowiednie uprawnienia
                     if (project.getTeam().getMemberByIndex(moveTo).getPermissionStatus() >= task
                             .getRequiredPermissionStatus()) {
+
                         task.setMemberIndex(moveTo);
+
                     } else {
                         System.out.println(
                                 "\nThe person you want to assign the task to does not have sufficient authority.");
                         return;
                     }
+
                 } else {
                     System.out.println("\nBoth team members have to be part of the project's team.");
                     return;
@@ -108,10 +107,8 @@ public class TaskManager {
         }
 
         System.out.println("\nThe task has been reassign to another team member successfully.");
-
     }
 
-    // zmiana terminu wykonania zadania
     public void changeTaskDeadline(Scanner scanner, Project project) {
 
         if (tasks.size() == 0) {
@@ -125,6 +122,7 @@ public class TaskManager {
         String deadline = scanner.nextLine();
         LocalDate newDeadline = LocalDate.parse(deadline);
 
+        // sprawdzenie czy nowa data odnosi się do przyszłości
         if (!newDeadline.isAfter(LocalDate.now())) {
             System.out.println("\nThe deadline cannot refer to a date that has already passed.");
             return;
@@ -140,7 +138,6 @@ public class TaskManager {
         System.out.println("\nTask's deadline has been changed successfully.");
     }
 
-    // aktualizowanie szacowanego kosztu wykonania zadania
     public void updateTaskEstimatedCost(Scanner scanner, Project project) {
 
         if (tasks.size() == 0) {
@@ -163,7 +160,6 @@ public class TaskManager {
         System.out.println("\nTask's estimated cost has been changed successfully.");
     }
 
-    // dodanie nowego zadania do listy
     public void addTask(Scanner scanner, Project project) {
 
         System.out.println("\nTo add a task, complete the form below.");
@@ -211,7 +207,6 @@ public class TaskManager {
         System.out.println("\nThe task has been added successfully.");
     }
 
-    // wyświetlenie postępu projektu
     public void generateReport() {
         System.out.println("Project progress report");
         System.out.println("Completed tasks: " + completedTasks.size());

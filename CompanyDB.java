@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class CompanyDB {
 
     public static void loadData() {
+
+        // pracownicy dodani do systemu przez firmę
         Worker workerJane = new Worker(1, "Jane", "Sunny", "jane.sunny@company.com", true);
         Worker workerAlex = new Worker(2, "Alex", "Stark", "alex.stark@company.com", true);
         Worker workerMark = new Worker(3, "Mark", "Smith", "mark.smith@company.com", true);
@@ -36,6 +38,8 @@ public class CompanyDB {
 
             String line;
             while ((line = reader.readLine()) != null) {
+
+                // zachowujemy tylko te informacje, które nie dotyczą usuwanego projektu
                 if (!line.startsWith(projectIndex)) {
                     writer.println(line);
                 }
@@ -85,16 +89,23 @@ public class CompanyDB {
             String line;
             while ((line = reader.readLine()) != null) {
 
+                // zadania przypisane do innego projektu, niż tego, który nas aktualnie
+                // interesuje,
+                // zostają w pliku z zadaniami
                 if (!line.startsWith(Integer.toString(project.getIndex()))) {
                     writer.println(line);
                 }
 
+                // te, które dotyczą naszego projektu, trafiają do listy zadań
+                // stamtąd będzie można je modyfikować przy pomocy menedżera zadań
                 else {
                     Task task = Task.loadFromFile(line);
                     if (task.getStatus()) {
-                        project.getTaskManager().addToCompletedTasks(task);;
+                        project.getTaskManager().addToCompletedTasks(task);
+                        ;
                     } else {
-                        project.getTaskManager().addToTasks(task);;
+                        project.getTaskManager().addToTasks(task);
+                        ;
                     }
                 }
             }
@@ -104,7 +115,6 @@ public class CompanyDB {
 
         file.delete();
         tempFile.renameTo(file);
-
     }
 
     public static void loadMembers(Project project) {
@@ -124,13 +134,15 @@ public class CompanyDB {
             String line;
             while ((line = reader.readLine()) != null) {
 
+                // analogicznie jak w funkcji loadTasks
                 if (!line.startsWith(Integer.toString(project.getIndex()))) {
                     writer.println(line);
                 }
 
                 else {
                     TeamMember teamMember = TeamMember.loadFromFile(line);
-                    project.getTeam().addMember(teamMember);;
+                    project.getTeam().addMember(teamMember);
+                    ;
                 }
             }
         } catch (IOException e) {
@@ -139,7 +151,6 @@ public class CompanyDB {
 
         file.delete();
         tempFile.renameTo(file);
-
     }
 
     public static void loadSchedule(Project project) {
@@ -159,13 +170,15 @@ public class CompanyDB {
             String line;
             while ((line = reader.readLine()) != null) {
 
+                // analogicznie jak w funkcji loadTasks
                 if (!line.startsWith(Integer.toString(project.getIndex()))) {
                     writer.println(line);
                 }
 
                 else {
                     Meeting meeting = Meeting.loadFromFile(line);
-                    project.getSchedule().addMeeting(meeting);;
+                    project.getSchedule().addMeeting(meeting);
+                    ;
                 }
             }
         } catch (IOException e) {
@@ -174,7 +187,6 @@ public class CompanyDB {
 
         file.delete();
         tempFile.renameTo(file);
-
     }
 
     public static void saveProjectsToFile() {
@@ -191,13 +203,14 @@ public class CompanyDB {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the Projects file.");
         }
-
     }
 
     public static void saveTasksToFile(ArrayList<Task> tasks) {
 
         File file = new File("DB_Tasks.txt");
 
+        // dopisujemy do odpowiedniego pliku zadania modyfikowane w trakcie działania
+        // programu
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
 
             for (Task task : tasks) {
@@ -208,13 +221,14 @@ public class CompanyDB {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the Tasks file.");
         }
-
     }
 
     public static void saveMembersToFile(ArrayList<TeamMember> members) {
 
         File file = new File("DB_Members.txt");
 
+        // dopisujemy do odpowiedniego pliku członków zespołu modyfikowanych w trakcie
+        // działania programu
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
 
             for (TeamMember teamMember : members) {
@@ -225,13 +239,14 @@ public class CompanyDB {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the Members file.");
         }
-
     }
 
     public static void saveScheduleToFile(ArrayList<Meeting> meetings) {
 
         File file = new File("DB_Meetings.txt");
 
+        // dopisujemy do odpowiedniego pliku spotkania modyfikowane w trakcie działania
+        // programu
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
 
             for (Meeting meeting : meetings) {
@@ -242,7 +257,6 @@ public class CompanyDB {
         } catch (IOException e) {
             System.out.println("An error occurred while writing to the Meetings file.");
         }
-
     }
 
 }

@@ -7,8 +7,7 @@ import java.util.Scanner;
 
 class TeamMember extends Worker {
 
-    // członek zespołu ma określony stopień uprawnień, przypisany zespół
-    // oraz własną listę zadań do wykonania
+    // atrybuty klasy
     private int projectIndex;
     private int permissionStatus;
 
@@ -24,7 +23,6 @@ class TeamMember extends Worker {
         return this.permissionStatus;
     }
 
-    // wyświetlanie listy zadań członka zespołu
     public void showTasks(Project project) {
 
         System.out.println(this.getFirstName() + "'s tasks: ");
@@ -37,19 +35,20 @@ class TeamMember extends Worker {
         }
     }
 
-    // edycja wspólnego pliku
     public void addToCommonFile(Scanner scanner, Project project) {
 
         System.out.println(
                 "\nEnter the information you want to add to the common file.\nNote: Everyone in the team will be able to see this information.");
         String idea = scanner.nextLine();
 
+        // gwarancja unikalności pliku tekstowego
         String fileName = project.getTeam().getNickname() + "_commonFile.txt";
         File file = new File(fileName);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
             writer.write(idea + "\n");
-            writer.write("-- ADDED BY: " + this.getFirstName() + " " + this.getLastName() + " -- " + LocalDate.now() + " --\n\n");
+            writer.write("-- ADDED BY: " + this.getFirstName() + " " + this.getLastName() + " -- " + LocalDate.now()
+                    + " --\n\n");
         } catch (IOException e) {
             System.out.println("\nAn error occurred while writing to the common file.");
         }
@@ -66,6 +65,7 @@ class TeamMember extends Worker {
     }
 
     public static TeamMember loadFromFile(String line) {
+        // postać informacji pobieranych z pliku:
         // projectIndex, index, permissionStatus
         String[] informations = line.split(";");
 

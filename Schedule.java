@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Schedule {
 
-    // harmonogram zawiera listę nadchodzących spotkań
+    // lista nadchodzących spotkań
     private ArrayList<Meeting> meetings = new ArrayList<Meeting>();
 
     public void initializeMeetingsArray() {
@@ -20,7 +20,6 @@ public class Schedule {
         this.meetings.add(meeting);
     }
 
-    // wyświetlenie listy wszystkich spotkań
     public void showMeetings() {
 
         if (meetings.size() == 0) {
@@ -34,7 +33,6 @@ public class Schedule {
         }
     }
 
-    // dodanie spotkania
     public void addNewMeeting(Scanner scanner, Project project) {
 
         System.out.println("\nTo add a meeting, complete the form below.");
@@ -63,7 +61,6 @@ public class Schedule {
         meetings.add(newMeeting);
 
         System.out.println("\nThe meeting has been added successfully.");
-
     }
 
 }

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class ProjectManager extends Worker {
 
-    // kierownik projektów posiada listę projektów, którymi zarządza
+    // lista projektów, którymi aktualnie zarządza
     private ArrayList<Project> projects = new ArrayList<Project>();
 
     // konstruktor klasy
@@ -16,7 +16,6 @@ class ProjectManager extends Worker {
         this.projects.add(project);
     }
 
-    // wyświetlanie listy projektów
     public void showProjects() {
 
         if (projects.size() == 0) {
@@ -28,4 +27,5 @@ class ProjectManager extends Worker {
             System.out.println("--> " + project.getName());
         }
     }
+    
 }

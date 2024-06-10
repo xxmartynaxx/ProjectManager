@@ -28,6 +28,8 @@ public class Managing {
                 case 5 -> Views.projectManagerView(scanner, project);
                 case 6 -> Views.scheduleView(scanner, project);
                 case 7 -> {
+                    // przed wyjściem do menu głównego
+                    // trzeba zapisać wszelkie zmiany, jakie zaszły podczas działania programu
                     CompanyDB.saveMembersToFile(project.getTeam().getMembers());
                     CompanyDB.saveTasksToFile(project.getTaskManager().getTasks());
                     CompanyDB.saveTasksToFile(project.getTaskManager().getCompletedTasks());
@@ -38,5 +40,5 @@ public class Managing {
             }
         }
     }
-
+    
 }

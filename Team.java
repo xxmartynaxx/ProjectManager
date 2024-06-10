@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 class Team {
 
-    // zespół ma swoją unikalną nazwę, listę należących do niego członków
+    // atrybuty klasy
     private String nickname;
     private ArrayList<TeamMember> members = new ArrayList<TeamMember>();
 
@@ -27,7 +27,6 @@ class Team {
         this.members.add(teamMember);
     }
 
-    // wypisanie informacji o zespole
     public void displayInfo() {
         System.out.println("Nickname: " + this.nickname);
         System.out.println("Team members:");
@@ -42,7 +41,6 @@ class Team {
         }
     }
 
-    // dodanie nowego członka do zespołu
     public void addNewMember(Scanner scanner, Project project) {
 
         System.out.println("\nTo add a Team Member, complete the form below. ");
@@ -69,10 +67,8 @@ class Team {
                     "\nCould not find any Worker with this index or this Worker is already a part of this team.");
             return;
         }
-
     }
 
-    // usunięcie członka z zespołu
     public void removeMember(Scanner scanner) {
 
         if (members.size() == 0) {
@@ -90,7 +86,6 @@ class Team {
         }
     }
 
-    // zwrócenie konkretnego członka zespołu (po jego unikalnym indeksie)
     public TeamMember getMemberByIndex(int index) {
 
         for (TeamMember teamMember : members) {

@@ -1,6 +1,6 @@
 class Worker {
 
-    // atrybuty klasy Worker
+    // atrybuty klasy
     private int index;
     private String firstName;
     private String lastName;
@@ -13,13 +13,13 @@ class Worker {
         this.lastName = lastName;
         this.email = email;
 
+        // atrybut pozwalający odróżnić pracowników od kierowników projektów
         if (addToCompanyWorkers) {
             Main.companyWorkers.add(this);
         }
 
     }
 
-    // wyświetlanie informacji o pracowniku
     public void displayInfo() {
         System.out.println(index + "  " + firstName + " " + lastName + "  " + email);
     }
@@ -39,4 +39,5 @@ class Worker {
     public String getEmail() {
         return this.email;
     }
+
 }

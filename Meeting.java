@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Meeting {
 
-    // atrybuty klasy Meeting
+    // atrybuty klasy
     private int projectIndex;
     private String title;
     private String place;
@@ -19,7 +19,6 @@ public class Meeting {
         this.duration = duration;
     }
 
-    // wyświetlanie informacji o spotkaniu
     public void displayInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
         String formatted = String.format("%s", this.time.format(formatter));
@@ -35,8 +34,9 @@ public class Meeting {
         String line = pIndex + ";" + title + ";" + place + ";" + t + ";" + d;
         return line;
     }
-    
+
     public static Meeting loadFromFile(String line) {
+        // postać informacji pobieranych z pliku:
         // projectIndex, title, place, time, duration
         String[] informations = line.split(";");
 
@@ -50,4 +50,5 @@ public class Meeting {
 
         return meeting;
     }
+    
 }

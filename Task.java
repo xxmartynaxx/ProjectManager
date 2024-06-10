@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 
 class Task {
 
-    // atrybuty klasy Task
+    // atrybuty klasy
     private int index;
     private int projectIndex;
     private int memberIndex;
@@ -26,7 +26,6 @@ class Task {
         this.isCompleted = false;
     }
 
-    // wyświetlanie informacji
     public void displayinfo() {
         System.out.println(index + " " + " " + name);
         System.out.println(description);
@@ -99,6 +98,7 @@ class Task {
         String d = deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String eC = Double.toString(estimatedCost);
 
+        // odróżnienie zadań wykonanych od niewykonanych
         String c;
         if (isCompleted) {
             c = "c";
@@ -112,8 +112,9 @@ class Task {
     }
 
     public static Task loadFromFile(String line) {
-        // projectIndex, index, memberIndex, name, descr, req, deadline, estimCost,
-        // isCompl
+        // postać informacji pobieranych z pliku:
+        // projectIndex, index, memberIndex, name, descr, req, deadline,
+        // estimCost, isCompl
         String[] informations = line.split(";");
 
         int pIndex = Integer.parseInt(informations[0]);

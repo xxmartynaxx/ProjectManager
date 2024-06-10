@@ -26,4 +26,4 @@ Generowanie raportów o postępach prac oraz śledzenie wydatków w czasie reali
 Dla zwiększenia czytelności diagramu podzieliłam go na 2 części:
 - Jedna obrazuje relacje, jakie zachodzą między poszczególnymi klasami. 
 - Druga zawiera wszystkie klasy wraz z ich atrybutami oraz metodami.
-Klasy oddzielone przerywaną linią to w głównej mierze klasy imitujące bazę danych (zapisywanie danych, kasowanie, modyfikacja, wyszukiwanie informacji) oraz zarządzania interfejsem konsolowym.
+Klasy oddzielone przerywaną linią to w głównej mierze klasy imitujące bazę danych (zapisywanie danych, kasowanie, modyfikacja, wyszukiwanie informacji) oraz do zarządzania interfejsem konsolowym.

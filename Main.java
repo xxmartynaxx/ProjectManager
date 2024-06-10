@@ -55,6 +55,7 @@ public class Main {
                 case 2 -> removeProject(scanner);
                 case 3 -> manageProject(scanner);
                 case 4 -> {
+                    // przed wyjściem zapisujemy ogólne zmiany, jakie zaszły w projektach
                     CompanyDB.saveProjectsToFile();
                     exit = true;
                     System.out.println("\nExiting program.");
@@ -64,7 +65,6 @@ public class Main {
         }
 
         scanner.close();
-
     }
 
     // zwrócenie konkretnego pracownika (po jego unikalnym indeksie)
@@ -139,6 +139,7 @@ public class Main {
         Project newProject = new Project(name, description, date, getPMByIndex(indexPM), sponsor, budget);
 
         companyProjects.add(newProject);
+        // pilnujemy, by indeksy nadawane projektom były unikalne
         projectsCounter++;
 
         System.out.println("\nThe project has been added successfully.");
@@ -165,7 +166,6 @@ public class Main {
         }
 
         System.out.println("\nThe project has been removed successfully.");
-
     }
 
     // zarządzanie istniejącym projektem
@@ -188,10 +188,13 @@ public class Main {
         }
 
         else {
+            // użytkownik wskazał projekt, którym chce zarządzać
+            // system pobiera wszystkie dane dotyczące tego projektu
             CompanyDB.loadMembers(projectToManage);
             CompanyDB.loadSchedule(projectToManage);
             CompanyDB.loadTasks(projectToManage);
             Managing.manageProject(scanner, projectToManage);
         }
     }
+
 }
