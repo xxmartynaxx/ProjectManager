@@ -27,6 +27,7 @@ class Task {
     }
 
     public void displayinfo() {
+        System.out.println("\n");
         System.out.println(index + " " + " " + name);
         System.out.println(description);
         System.out.println(String.format("Required permission status: %d", requiredPermissionStatus));

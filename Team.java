@@ -28,7 +28,7 @@ class Team {
     }
 
     public void displayInfo() {
-        System.out.println("Nickname: " + this.nickname);
+        System.out.println("\nNickname: " + this.nickname);
         System.out.println("Team members:");
 
         if (members.size() == 0) {

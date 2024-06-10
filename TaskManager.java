@@ -8,7 +8,7 @@ public class TaskManager {
     // atrybuty klasy
     private ArrayList<Task> tasks = new ArrayList<Task>();
     private ArrayList<Task> completedTasks = new ArrayList<Task>();
-    private static int tasksCounter = 1;
+    public static int tasksCounter = 1;
 
     public void showTasks() {
 
@@ -18,7 +18,6 @@ public class TaskManager {
         }
         for (Task task : tasks) {
             task.displayinfo();
-            System.out.println("\n");
         }
     }
 
@@ -193,7 +192,7 @@ public class TaskManager {
         scanner.nextLine();
 
         if (project.getTeam().getMemberByIndex(TMIndex) == null) {
-            System.out.println("This Worker is not a part of this team.");
+            System.out.println("\nThis Worker is not a part of this team.");
             return;
         }
 
@@ -208,11 +207,18 @@ public class TaskManager {
     }
 
     public void generateReport() {
-        System.out.println("Project progress report");
+        System.out.println("-- Project progress report --");
         System.out.println("Completed tasks: " + completedTasks.size());
         System.out.println("Remaining tasks: " + tasks.size());
-        double progress = (double) completedTasks.size() / (completedTasks.size() + tasks.size());
-        System.out.println(String.format("Project progress: %.2f", progress));
+
+        if  ((completedTasks.size() + tasks.size()) == 0) {
+            System.out.println("Project progress: 0");
+        }
+
+        else {
+            double progress = (double) completedTasks.size() / (completedTasks.size() + tasks.size());
+            System.out.println(String.format("Project progress: %.2f", progress));
+        }
     }
 
 }

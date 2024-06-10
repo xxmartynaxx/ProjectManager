@@ -30,13 +30,13 @@ class TeamMember extends Worker {
             if (task.getMemberIndex() == this.getIndex()) {
                 System.out.println("--> " + task.getName());
                 System.out.println(task.getDescription());
-                System.out.println("\n");
             }
         }
     }
 
     public void addToCommonFile(Scanner scanner, Project project) {
 
+        scanner.nextLine();
         System.out.println(
                 "\nEnter the information you want to add to the common file.\nNote: Everyone in the team will be able to see this information.");
         String idea = scanner.nextLine();

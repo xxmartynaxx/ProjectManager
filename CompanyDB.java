@@ -57,11 +57,15 @@ public class CompanyDB {
 
         Main.companyProjects = new ArrayList<Project>();
 
+        // zmienna potrzebna do przechwycenia ostatnio użytego indeksu
+        String lastLine = null;
+
         try (BufferedReader reader = new BufferedReader(new FileReader("DB_Projects.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 Project project = Project.loadFromFile(line);
                 Main.companyProjects.add(project);
+                lastLine = line;
             }
 
         } catch (FileNotFoundException e) {
@@ -70,6 +74,15 @@ public class CompanyDB {
         } catch (IOException e) {
             System.out.println("An error occured while loading the projects file.");
         }
+
+        // ostatni indeks, który widnieje w pliku 
+        // zwiększamy go o 1, aby zaczynać od unikalnego indeksu
+        if (lastLine != null) {
+            String[] elements = lastLine.split(";");
+            if (elements.length > 0) {
+                Main.projectsCounter = Integer.valueOf(elements[0]) + 1;
+            }
+        }
     }
 
     public static void loadTasks(Project project) {
@@ -77,6 +90,9 @@ public class CompanyDB {
         project.getTaskManager().initializeTasksArray();
         File file = new File("DB_Tasks.txt");
         File tempFile = new File("Temporary.txt");
+
+        // zmienna potrzebna do przechwycenia ostatnio użytego indeksu
+        String lastLine = null;
 
         if (!file.exists()) {
             System.out.println("File does not exist yet, skipping tasks loading.");
@@ -89,9 +105,8 @@ public class CompanyDB {
             String line;
             while ((line = reader.readLine()) != null) {
 
-                // zadania przypisane do innego projektu, niż tego, który nas aktualnie
-                // interesuje,
-                // zostają w pliku z zadaniami
+                // zadania przypisane do innego projektu niż tego, który nas aktualnie
+                // interesuje, zostają w pliku z zadaniami
                 if (!line.startsWith(Integer.toString(project.getIndex()))) {
                     writer.println(line);
                 }
@@ -102,15 +117,24 @@ public class CompanyDB {
                     Task task = Task.loadFromFile(line);
                     if (task.getStatus()) {
                         project.getTaskManager().addToCompletedTasks(task);
-                        ;
                     } else {
                         project.getTaskManager().addToTasks(task);
-                        ;
+                        lastLine = line;
                     }
                 }
             }
+
         } catch (IOException e) {
             System.out.println("An error occurred while loading the tasks file.");
+        }
+
+        // ostatni indeks, który widnieje w pliku 
+        // zwiększamy go o 1, aby zaczynać od unikalnego indeksu
+        if (lastLine != null) {
+            String[] elements = lastLine.split(";");
+            if (elements.length > 0) {
+                TaskManager.tasksCounter = Integer.valueOf(elements[1]) + 1;
+            }
         }
 
         file.delete();
